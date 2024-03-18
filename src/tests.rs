@@ -12,4 +12,5 @@ pub fn test_elf_read() {
     assert_eq!(&bin.sections.len(), &38);
     assert!(&bin.shstrtab.is_some());
     assert!(&bin.strtab.is_some());
+    assert_eq!(&bin.symbols.len(), &40);
 }

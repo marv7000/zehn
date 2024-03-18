@@ -194,16 +194,15 @@ impl Object {
             symbols.push(sym);
         }
         // Read symbol names.
-        let strtab = result.find_section(".strtab").unwrap();
+        let strtab = result.find_section(".strtab").unwrap().clone();
         for sym in symbols {
             let mut body = &strtab.body[sym.sym_name as usize..];
             let name = &body.read_cstr()?;
 
-            // TODO
-            //result.symbols.insert(name.clone(), sym.clone());
+            result.symbols.insert(name.clone(), sym.clone());
         }
 
-        result.strtab = Some(strtab.clone());
+        result.strtab = Some(strtab);
 
         input.seek(SeekFrom::Start(0))?;
 
