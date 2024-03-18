@@ -89,38 +89,28 @@ impl Header {
         written += buf.write_u8(self.e_ident.ei_abiversion)?;
         written += buf.write_bytes(&self.e_ident.ei_pad)?;
 
+        written += buf.write_u16(&self.e_ident.ei_data, self.e_type)?;
+        written += buf.write_u16(&self.e_ident.ei_data, self.e_machine)?;
+        written += buf.write_u32(&self.e_ident.ei_data, self.e_version)?;
         match &self.e_ident.ei_class {
             Class::Bits32 => {
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_type)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_machine)?;
-                written += buf.write_u32(&self.e_ident.ei_data, self.e_version)?;
                 written += buf.write_u32(&self.e_ident.ei_data, self.e_entry as u32)?;
                 written += buf.write_u32(&self.e_ident.ei_data, self.e_phoff as u32)?;
                 written += buf.write_u32(&self.e_ident.ei_data, self.e_shoff as u32)?;
-                written += buf.write_u32(&self.e_ident.ei_data, self.e_flags)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_ehsize)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_phentsize)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_phnum)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_shentsize)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_shnum)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_shstrndx)?;
             }
             Class::Bits64 => {
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_type)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_machine)?;
-                written += buf.write_u32(&self.e_ident.ei_data, self.e_version)?;
                 written += buf.write_u64(&self.e_ident.ei_data, self.e_entry)?;
                 written += buf.write_u64(&self.e_ident.ei_data, self.e_phoff)?;
                 written += buf.write_u64(&self.e_ident.ei_data, self.e_shoff)?;
-                written += buf.write_u32(&self.e_ident.ei_data, self.e_flags)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_ehsize)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_phentsize)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_phnum)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_shentsize)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_shnum)?;
-                written += buf.write_u16(&self.e_ident.ei_data, self.e_shstrndx)?;
             }
         };
+        written += buf.write_u32(&self.e_ident.ei_data, self.e_flags)?;
+        written += buf.write_u16(&self.e_ident.ei_data, self.e_ehsize)?;
+        written += buf.write_u16(&self.e_ident.ei_data, self.e_phentsize)?;
+        written += buf.write_u16(&self.e_ident.ei_data, self.e_phnum)?;
+        written += buf.write_u16(&self.e_ident.ei_data, self.e_shentsize)?;
+        written += buf.write_u16(&self.e_ident.ei_data, self.e_shnum)?;
+        written += buf.write_u16(&self.e_ident.ei_data, self.e_shstrndx)?;
         Ok(written)
     }
 }
