@@ -5,6 +5,7 @@ edition = "2021"
 license = "LGPL-2.1"
 authors = ["Marvin Friedrich <contact@marvinf.com>"]
 repository = "https://github.com/marv7000/zehn/"
+description = "A library for reading and writing ELF binaries"
 
 [dependencies]
 indexmap = "2.2.5"
